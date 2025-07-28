@@ -1,0 +1,136 @@
+.side-selection-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f1419, #1a1a2e);
+  padding: 20px;
+}
+
+.side-selection {
+  background: rgba(26, 26, 46, 0.9);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 2px solid #ff4655;
+  max-width: 600px;
+  width: 100%;
+}
+
+.side-selection h2 {
+  color: #ff4655;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.selected-map-display {
+  margin-bottom: 40px;
+}
+
+.selected-map-display img {
+  width: 300px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 3px solid #53e3a6;
+  margin-bottom: 15px;
+}
+
+.selected-map-display h3 {
+  color: #53e3a6;
+  font-size: 24px;
+  margin: 0;
+}
+
+.side-options {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.side-button {
+  background: linear-gradient(135deg, #16213e, #1a1a2e);
+  border: 2px solid transparent;
+  border-radius: 15px;
+  padding: 30px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.side-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.side-button.attack:hover {
+  border-color: #ff6b6b;
+  background: linear-gradient(135deg, #ff6b6b, #e74c3c);
+}
+
+.side-button.defense:hover {
+  border-color: #4ecdc4;
+  background: linear-gradient(135deg, #4ecdc4, #26d0ce);
+}
+
+.side-icon {
+  font-size: 40px;
+  margin-bottom: 5px;
+}
+
+.side-button span {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.side-description {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .side-selection {
+    padding: 30px 20px;
+  }
+
+  .side-selection h2 {
+    font-size: 22px;
+  }
+
+  .selected-map-display img {
+    width: 250px;
+    height: 150px;
+  }
+
+  .selected-map-display h3 {
+    font-size: 20px;
+  }
+
+  .side-options {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .side-button {
+    min-width: 200px;
+    padding: 25px 20px;
+  }
+
+  .side-icon {
+    font-size: 35px;
+  }
+
+  .side-button span {
+    font-size: 18px;
+  }
+}

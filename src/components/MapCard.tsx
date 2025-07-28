@@ -8,9 +8,12 @@ interface MapCardProps {
   mapState: MapState;
   onMapClick: (mapId: string) => void;
   isClickable: boolean;
+  isFeatured?: boolean;
+  team1Name?: string;
+  team2Name?: string;
 }
 
-const MapCard: React.FC<MapCardProps> = ({ map, mapState, onMapClick, isClickable }) => {
+const MapCard: React.FC<MapCardProps> = ({ map, mapState, onMapClick, isClickable, isFeatured = false, team1Name = 'Team 1', team2Name = 'Team 2' }) => {
   const getStatusClass = () => {
     switch (mapState.status) {
       case 'banned':
@@ -25,9 +28,25 @@ const MapCard: React.FC<MapCardProps> = ({ map, mapState, onMapClick, isClickabl
   const getStatusText = () => {
     switch (mapState.status) {
       case 'banned':
-        return `Banned by ${mapState.bannedBy === 'team1' ? 'Team 1' : 'Team 2'}`;
+        return `Banned by ${mapState.bannedBy === 'team1' ? team1Name : team2Name}`;
       case 'picked':
-        return `Picked by ${mapState.pickedBy === 'team1' ? 'Team 1' : 'Team 2'}`;
+        if (mapState.pickedBy === 'decider') {
+          // Special case for decider map
+          if (mapState.selectedSide && mapState.sideSelectedBy) {
+            const sideByText = mapState.sideSelectedBy === 'team1' ? team1Name : team2Name;
+            const sideText = mapState.selectedSide === 'attack' ? 'ATK' : 'DEF';
+            return `🏆 Decider Map | ${sideByText}: ${sideText}`;
+          }
+          return '🏆 Decider Map';
+        } else {
+          const pickedByText = `Picked by ${mapState.pickedBy === 'team1' ? team1Name : team2Name}`;
+          if (mapState.selectedSide && mapState.sideSelectedBy) {
+            const sideByText = mapState.sideSelectedBy === 'team1' ? team1Name : team2Name;
+            const sideText = mapState.selectedSide === 'attack' ? 'ATK' : 'DEF';
+            return `${pickedByText} | ${sideByText}: ${sideText}`;
+          }
+          return pickedByText;
+        }
       default:
         return 'Available';
     }
@@ -35,7 +54,7 @@ const MapCard: React.FC<MapCardProps> = ({ map, mapState, onMapClick, isClickabl
 
   return (
     <div 
-      className={`map-card ${getStatusClass()} ${isClickable ? 'clickable' : ''}`}
+      className={`map-card ${getStatusClass()} ${isClickable ? 'clickable' : ''} ${isFeatured ? 'featured' : ''}`}
       onClick={() => isClickable && onMapClick(map.id)}
     >
       <div className="map-image">
@@ -51,9 +70,6 @@ const MapCard: React.FC<MapCardProps> = ({ map, mapState, onMapClick, isClickabl
           <h3 className="map-name">{map.name}</h3>
           <p className="map-status">{getStatusText()}</p>
         </div>
-      </div>
-      <div className="map-description">
-        <p>{map.description}</p>
       </div>
     </div>
   );

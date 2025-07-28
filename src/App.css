@@ -32,15 +32,26 @@ body {
 
 .completion-message h2 {
   color: #27ae60;
-  font-size: 2rem;
-  margin-bottom: 16px;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.completion-message p {
+.completion-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.completion-details p {
   color: #ecf0f1;
-  font-size: 1.2rem;
-  opacity: 0.9;
+  font-size: 1.1rem;
+  opacity: 0.95;
+  padding: 8px 15px;
+  background: rgba(26, 26, 46, 0.4);
+  border-radius: 8px;
+  border-left: 4px solid #53e3a6;
+  margin: 0;
 }
 
 /* Scrollbar Styling */

@@ -43,11 +43,11 @@ const GameHeader: React.FC<GameHeaderProps> = ({ gameState, onReset }) => {
           
           {gameState.pickedMaps.length > 0 && (
             <div className="picked-maps">
-              <h4>Selected Maps:</h4>
+              <h4>Selected Maps ({gameState.pickedMaps.length}):</h4>
               <div className="picked-list">
                 {gameState.pickedMaps.map((mapId, index) => (
                   <span key={mapId} className="picked-map">
-                    {mapId} {index < gameState.pickedMaps.length - 1 && ', '}
+                    {index + 1}. {mapId}
                   </span>
                 ))}
               </div>

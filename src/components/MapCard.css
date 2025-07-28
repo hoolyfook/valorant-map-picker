@@ -8,6 +8,21 @@
   position: relative;
 }
 
+.map-card.featured {
+  transform: scale(1.3);
+  border-color: #ff4655;
+  box-shadow: 0 12px 24px rgba(255, 70, 85, 0.3);
+  z-index: 10;
+}
+
+.map-card.featured .map-image {
+  height: 250px;
+}
+
+.map-card.featured .map-name {
+  font-size: 1.8rem;
+}
+
 .map-card.clickable {
   cursor: pointer;
 }
