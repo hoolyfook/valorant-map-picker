@@ -1,24 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import TeamSetup from './components/TeamSetup';
+import GameHeader from './components/GameHeader';
+import MapGrid from './components/MapGrid';
+import { valorantMaps } from './data/maps';
+import useGameState from './hooks/useGameState';
 
 function App() {
+  const { gameState, initializeGame, handleMapAction, resetGame } = useGameState();
+
+  if (!gameState) {
+    return <TeamSetup onStartGame={initializeGame} />;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <GameHeader gameState={gameState} onReset={resetGame} />
+      <MapGrid 
+        maps={valorantMaps}
+        mapStates={gameState.mapStates}
+        onMapClick={handleMapAction}
+        currentPhase={gameState.phase}
+      />
+      {gameState.phase === 'completed' && (
+        <div className="completion-message">
+          <h2>Draft Completed!</h2>
+          <p>Selected maps: {gameState.pickedMaps.join(', ')}</p>
+        </div>
+      )}
     </div>
   );
 }
