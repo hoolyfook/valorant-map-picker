@@ -12,11 +12,12 @@ interface MapGridProps {
   pickedMaps: string[];
   team1Name: string;
   team2Name: string;
+  disabled?: boolean;
 }
 
-const MapGrid: React.FC<MapGridProps> = ({ maps, mapStates, onMapClick, currentPhase, pickedMaps, team1Name, team2Name }) => {
+const MapGrid: React.FC<MapGridProps> = ({ maps, mapStates, onMapClick, currentPhase, pickedMaps, team1Name, team2Name, disabled = false }) => {
   const isMapClickable = (mapState: MapState) => {
-    return mapState.status === 'available' && currentPhase !== 'completed';
+    return mapState.status === 'available' && currentPhase !== 'completed' && !disabled;
   };
 
   // Separate different types of maps

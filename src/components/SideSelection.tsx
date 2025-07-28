@@ -8,6 +8,7 @@ interface SideSelectionProps {
   teamName: string;
   onSideSelect: (side: Side) => void;
   isDeciderMap?: boolean;
+  disabled?: boolean;
 }
 
 const SideSelection: React.FC<SideSelectionProps> = ({ 
@@ -15,7 +16,8 @@ const SideSelection: React.FC<SideSelectionProps> = ({
   mapImage, 
   teamName, 
   onSideSelect,
-  isDeciderMap = false
+  isDeciderMap = false,
+  disabled = false
 }) => {
   return (
     <div className="side-selection-container">
@@ -34,6 +36,7 @@ const SideSelection: React.FC<SideSelectionProps> = ({
           <button 
             className="side-button attack"
             onClick={() => onSideSelect('attack')}
+            disabled={disabled}
           >
             <div className="side-icon">⚔️</div>
             <span>ATK</span>
@@ -43,6 +46,7 @@ const SideSelection: React.FC<SideSelectionProps> = ({
           <button 
             className="side-button defense"
             onClick={() => onSideSelect('defense')}
+            disabled={disabled}
           >
             <div className="side-icon">🛡️</div>
             <span>DEF</span>
