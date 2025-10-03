@@ -105,6 +105,37 @@ const gameSlice = createSlice({
             
             // Skip to side selection
             state.phase = 'side_selection';
+          }
+          // Handle decider selection automatically (for BO3 after final ban)
+          else if (nextPhase === 'decider_selection') {
+            const remainingMaps = state.maps.filter(m => m.status === 'available');
+            if (remainingMaps.length === 1) {
+              const deciderMap = remainingMaps[0];
+              deciderMap.status = 'picked';
+              deciderMap.pickedBy = 'decider';
+              
+              // Add decider action to history
+              const deciderAction: Action = {
+                id: `${Date.now()}`,
+                type: 'pick',
+                teamId: 'decider',
+                mapId: deciderMap.id,
+                timestamp: Date.now(),
+                phase: 'decider_selection'
+              };
+              
+              state.actionHistory.push(deciderAction);
+              state.currentAction = deciderAction;
+              
+              state.matchResults.push({
+                mapId: deciderMap.id,
+                mapName: deciderMap.name,
+                teamSides: {}
+              });
+              
+              // Skip to side selection
+              state.phase = 'side_selection';
+            }
           } else {
             state.phase = nextPhase;
             state.activeTeamIndex = state.activeTeamIndex === 0 ? 1 : 0;

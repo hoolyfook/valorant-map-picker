@@ -14,19 +14,19 @@
   }
   
   .map-card {
-    @apply relative rounded-lg overflow-hidden transition-all duration-300 transform hover:scale-105;
+    @apply relative rounded-lg overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-lg;
   }
   
   .map-card.available {
-    @apply bg-gray-800 border-2 border-gray-600 cursor-pointer hover:border-white;
+    @apply border-2 border-gray-600 cursor-pointer hover:border-white hover:shadow-xl;
   }
   
   .map-card.banned {
-    @apply bg-red-900/50 border-2 border-red-500 cursor-not-allowed grayscale;
+    @apply border-2 border-red-500 cursor-not-allowed grayscale brightness-50;
   }
   
   .map-card.picked {
-    @apply bg-green-900/50 border-2 border-green-500;
+    @apply border-2 border-green-500 brightness-110;
   }
   
   .team-red {

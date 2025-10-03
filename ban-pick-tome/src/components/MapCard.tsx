@@ -39,32 +39,48 @@ const MapCard: React.FC<MapCardProps> = ({ map, onBan, onPick, disabled }) => {
   };
 
   return (
-    <div className={getCardClasses()} onClick={handleClick}>
-      <div className="aspect-video bg-gray-700 flex items-center justify-center">
-        {/* Map image would go here */}
-        <div className="text-2xl font-bold">{map.name}</div>
+    <div className={`${getCardClasses()} w-80 h-auto`} onClick={handleClick}>
+      <div 
+        className="aspect-video bg-gray-700 flex items-center justify-center bg-cover bg-center relative h-48"
+        style={{
+          backgroundImage: `url('${map.image}')`,
+        }}
+      >
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="relative z-10 text-4xl font-bold text-white drop-shadow-lg">
+          {map.name}
+        </div>
       </div>
       
-      <div className="p-3">
-        <h3 className="font-semibold text-lg">{map.name}</h3>
+      <div className="p-6">
+        <h3 className="font-semibold text-2xl text-center">{map.name}</h3>
         
         {map.status === 'banned' && (
-          <div className="text-red-400 text-sm mt-1">
+          <div className="text-red-400 text-lg mt-2">
             BANNED
           </div>
         )}
         
         {map.status === 'picked' && (
-          <div className="text-green-400 text-sm mt-1">
+          <div className="text-green-400 text-lg mt-2">
             PICKED
           </div>
         )}
       </div>
       
-      {map.status !== 'available' && (
-        <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-          <div className="text-white text-2xl font-bold">
-            {map.status === 'banned' ? 'BANNED' : 'PICKED'}
+      {map.status === 'banned' && (
+        <div className="absolute inset-0 bg-red-900/80 flex items-center justify-center">
+          <div className="text-red-100 text-5xl font-bold drop-shadow-lg">
+            BANNED
+          </div>
+        </div>
+      )}
+      
+      {map.status === 'picked' && (
+        <div className="absolute inset-0 bg-green-900/80 flex items-center justify-center">
+          <div className="text-green-100 text-5xl font-bold drop-shadow-lg">
+            PICKED
           </div>
         </div>
       )}
