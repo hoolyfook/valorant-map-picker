@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-valorant bg-valorant-dark text-valorant-light;
+  }
+}
+
+@layer components {
+  .centered-container {
+    @apply flex flex-col items-center justify-center w-full;
+  }
+  
+  .map-card {
+    @apply relative rounded-lg overflow-hidden transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .map-card.available {
+    @apply bg-gray-800 border-2 border-gray-600 cursor-pointer hover:border-white;
+  }
+  
+  .map-card.banned {
+    @apply bg-red-900/50 border-2 border-red-500 cursor-not-allowed grayscale;
+  }
+  
+  .map-card.picked {
+    @apply bg-green-900/50 border-2 border-green-500;
+  }
+  
+  .team-red {
+    @apply bg-valorant-red/20 border-valorant-red;
+  }
+  
+  .team-blue {
+    @apply bg-valorant-blue/20 border-valorant-blue;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .btn-red {
+    @apply btn-primary bg-valorant-red hover:bg-valorant-red/80 text-white;
+  }
+  
+  .btn-blue {
+    @apply btn-primary bg-valorant-blue hover:bg-valorant-blue/80 text-white;
+  }
+  
+  .game-section {
+    @apply w-full flex flex-col items-center justify-center;
+  }
+  
+  .centered-content {
+    @apply flex flex-col items-center text-center;
+  }
+}
