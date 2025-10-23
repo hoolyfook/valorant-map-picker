@@ -23,12 +23,16 @@ function Match({ id, teamA, teamB, onPick }) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="relative flex flex-col items-center gap-4 mb-6">
       <TeamCard
         name={teamA}
         selected={selected === teamA}
         onSelect={() => handleSelect(teamA, teamB)}
       />
+      
+      {/* Đường kẻ phụ */}
+      <div className="absolute left-full top-1/2 w-6 h-[2px] bg-gray-500"></div>
+
       <TeamCard
         name={teamB}
         selected={selected === teamB}
@@ -38,7 +42,18 @@ function Match({ id, teamA, teamB, onPick }) {
   );
 }
 
+function Champion({ team }) {
+  return (
+    <div className="w-36 text-center py-3 px-4 rounded-xl border border-yellow-400 bg-yellow-600 text-black font-bold">
+      {team || "TBD"}
+    </div>
+  );
+}
+
+
 export default function App() {
+  const [champion, setChampion] = useState(null);
+
   const [upper, setUpper] = useState({
     U1: { A: initialTeams[0], B: initialTeams[1] },
     U2: { A: initialTeams[2], B: initialTeams[3] },
@@ -86,6 +101,8 @@ export default function App() {
       if (id === "L6") GF.B = winner;
     }
 
+  if (GF.A && GF.B) setChampion(GF.A === winner ? GF.A : GF.B);
+
     setUpper(U);
     setLower(L);
     setGrandFinal(GF);
@@ -93,11 +110,8 @@ export default function App() {
 
   return (
 <div className="w-full min-h-screen bg-[#0a0a1a] text-white p-8 flex flex-col items-center overflow-x-auto">
-      <h1 className="text-2xl font-bold mb-8">Valorant Pick’em — Double Elimination (8 Teams)</h1>
       <div className="flex flex-row items-center justify-center gap-12">
-          {/* UPPER BRACKET */}
           <div className="mb-12">
-            <h2 className="text-lg font-semibold text-center mb-4">Upper Bracket</h2>
             <div className="flex flex-row items-center gap-12 justify-center">
               <div>
               <h3 className="text-sm text-gray-400 text-center mb-2">Round 1</h3>
@@ -116,9 +130,6 @@ export default function App() {
               <Match id="U7" teamA={upper.U7.A} teamB={upper.U7.B} onPick={handlePick} />
             </div>
           </div>
-
-        {/* LOWER BRACKET */}
-          <h2 className="text-lg font-semibold text-center mb-4">Lower Bracket</h2>
           <div className="flex flex-row gap-12 justify-center">
             <div>
               <h3 className="text-sm text-gray-400 text-center mb-2">Round 1</h3>
@@ -141,11 +152,17 @@ export default function App() {
           </div>
         </div>
       <div>
-        {/* GRAND FINAL */}
-        <div className="mt-12 text-center">
-          <h2 className="font-semibold text-lg mb-2">Grand Final</h2>
-          <Match id="GF" teamA={grandFinal.A} teamB={grandFinal.B} onPick={() => {}} />
+      <div className="mt-12 text-center">
+        <h2 className="font-semibold text-lg mb-2">Grand Final</h2>
+        <Match id="GF" teamA={grandFinal.A} teamB={grandFinal.B} onPick={handlePick} />
+        
+        {/* Champion */}
+        <div className="mt-8">
+          <h2 className="font-semibold text-lg mb-2">Champion</h2>
+          <Champion team={grandFinal.A || grandFinal.B} />
         </div>
+      </div>
+
       </div>
       </div>
     </div>
