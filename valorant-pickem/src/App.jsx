@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const initialTeams = ["SEN", "FNC", "G2", "PRX", "NAVI", "GEN", "LOUD", "TH"];
 
@@ -75,38 +75,53 @@ export default function App() {
 
   const [grandFinal, setGrandFinal] = useState({ A: null, B: null });
 
-  const handlePick = (id, winner, loser) => {
-    const U = { ...upper };
-    const L = { ...lower };
-    const GF = { ...grandFinal };
+const handlePick = (id, winner, loser) => {
+  const U = { ...upper };
+  const L = { ...lower };
+  const GF = { ...grandFinal };
 
-    // Winners logic
-    if (id.startsWith("U")) {
-      if (id === "U1") U.U5.A = winner, L.L1.A = loser;
-      if (id === "U2") U.U5.B = winner, L.L1.B = loser;
-      if (id === "U3") U.U6.A = winner, L.L2.A = loser;
-      if (id === "U4") U.U6.B = winner, L.L2.B = loser;
-      if (id === "U5") U.U7.A = winner, L.L3.B = loser;
-      if (id === "U6") U.U7.B = winner, L.L4.B = loser;
-      if (id === "U7") GF.A = winner, L.L6.B = loser;
-    }
+  // Winners logic
+  if (id.startsWith("U")) {
+    if (id === "U1") U.U5.A = winner, L.L1.A = loser;
+    if (id === "U2") U.U5.B = winner, L.L1.B = loser;
+    if (id === "U3") U.U6.A = winner, L.L2.A = loser;
+    if (id === "U4") U.U6.B = winner, L.L2.B = loser;
+    if (id === "U5") U.U7.A = winner, L.L3.B = loser;
+    if (id === "U6") U.U7.B = winner, L.L4.B = loser;
+    if (id === "U7") GF.A = winner, L.L6.B = loser;
+  }
 
-    // Losers logic
-    if (id.startsWith("L")) {
-      if (id === "L1") L.L3.A = winner;
-      if (id === "L2") L.L4.A = winner;
-      if (id === "L3") L.L5.A = winner;
-      if (id === "L4") L.L5.B = winner;
-      if (id === "L5") L.L6.A = winner;
-      if (id === "L6") GF.B = winner;
-    }
+  // Losers logic
+  if (id.startsWith("L")) {
+    if (id === "L1") L.L3.A = winner;
+    if (id === "L2") L.L4.A = winner;
+    if (id === "L3") L.L5.A = winner;
+    if (id === "L4") L.L5.B = winner;
+    if (id === "L5") L.L6.A = winner;
+    if (id === "L6") GF.B = winner;
+  }
 
-  if (GF.A && GF.B) setChampion(GF.A === winner ? GF.A : GF.B);
+  // Nếu đây là trận Grand Final thật
+  if (id === "GF") {
+    // đội vừa click là đội thắng cuối cùng
+    GF.winner = winner;
+  }
 
-    setUpper(U);
-    setLower(L);
-    setGrandFinal(GF);
-  };
+  setUpper(U);
+  setLower(L);
+  setGrandFinal(GF);
+};
+
+useEffect(() => {
+  // Nếu đã chọn đội thắng cho Grand Final
+  if (grandFinal.winner) {
+    setChampion(grandFinal.winner);
+  } else {
+    setChampion(null); // reset nếu chưa có
+  }
+}, [grandFinal]);
+
+
 
   return (
 <div className="w-full min-h-screen bg-[#0a0a1a] text-white p-8 flex flex-col items-center overflow-x-auto">
@@ -155,15 +170,12 @@ export default function App() {
       <div className="mt-12 text-center">
         <h2 className="font-semibold text-lg mb-2">Grand Final</h2>
         <Match id="GF" teamA={grandFinal.A} teamB={grandFinal.B} onPick={handlePick} />
-        
-        {/* Champion */}
-        <div className="mt-8">
-          <h2 className="font-semibold text-lg mb-2">Champion</h2>
-          <Champion team={grandFinal.A || grandFinal.B} />
+      </div>
+      </div>
+          <div className="mt-8">
+          <h2 className="font-semibold text-lg mb-2 text-center">Champion</h2>
+          <Champion team={champion} />
         </div>
-      </div>
-
-      </div>
       </div>
     </div>
   );
