@@ -7,6 +7,7 @@
 @layer base {
   :root {
     --background: 222.2 84% 4.9%;
+    
     --foreground: 210 40% 98%;
 
     --card: 222.2 84% 4.9%;
@@ -47,4 +48,11 @@
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+  /* Global background image (served from public/ as /background_giai.png) */
+  background-image: url("/background_giai.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  /* Use fixed so background stays while content scrolls; remove if undesired */
+  background-attachment: fixed;
 }

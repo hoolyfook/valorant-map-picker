@@ -5,24 +5,37 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
 
   const handleLogin = async () => {
-    const res = await fetch("http://localhost:8000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    })
+    try {
+      const res = await fetch("http://localhost:8000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ username, password }),
+      })
 
-    const data = await res.json()
+      const data = await res.json()
 
-    if (data.username) {
-      localStorage.setItem("username", data.username)
-      window.location.href = "/pickem"
-    } else {
-      alert("Sai tài khoản hoặc mật khẩu!")
+      if (res.ok) {
+        localStorage.setItem("username", username)
+        window.location.href = "/pickem"
+      } else {
+        alert(data?.detail || "Sai tài khoản hoặc mật khẩu!")
+      }
+    } catch (e) {
+      alert("Không thể kết nối máy chủ: " + e.message)
     }
   }
 
   return (
-    <div className="h-screen flex items-center justify-center text-white">
+    <div 
+      className="h-screen flex items-center justify-center text-white"
+      style={{
+        backgroundImage: 'url(/background_giai.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       <div className="bg-gray-900 p-8 rounded-lg w-80 space-y-4">
         <h2 className="text-center font-bold text-xl">Login</h2>
 

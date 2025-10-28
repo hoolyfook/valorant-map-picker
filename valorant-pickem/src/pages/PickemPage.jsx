@@ -137,15 +137,27 @@ export default function PickemPage() {
       })
 
       const data = await res.json()
-      if (res.ok) alert("Saved!")
-      else alert("Failed: " + data.message)
+      if (res.ok) {
+        alert("Đã lưu picks thành công!")
+      } else {
+        alert("Lưu thất bại: " + (data?.detail || data?.message || "Lỗi không xác định"))
+      }
     } catch (err) {
-      alert("Error saving picks: " + err.message)
+      alert("Không thể kết nối máy chủ: " + err.message)
     }
   }
 
   return (
-    <div className="w-full min-h-screen bg-[#0a0a1a] text-white p-8 flex flex-col items-center overflow-x-auto">
+    <div 
+      className="w-full min-h-screen text-white p-8 flex flex-col items-center overflow-x-auto"
+      style={{
+        backgroundImage: 'url(/background_giai.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+
       <div className="flex flex-row items-center justify-center gap-12">
         <div className="mb-12">
           <div className="flex flex-row items-center gap-12 justify-center">

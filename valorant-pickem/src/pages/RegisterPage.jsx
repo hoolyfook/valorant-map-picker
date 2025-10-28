@@ -7,6 +7,7 @@ export default function RegisterPage() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [discordId, setDiscordId] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -19,7 +20,7 @@ export default function RegisterPage() {
     const res = await fetch("http://localhost:8000/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password, discordId }),
     })
 
     const data = await res.json()
@@ -33,7 +34,15 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div 
+      className="min-h-screen flex items-center justify-center text-white"
+      style={{
+        backgroundImage: 'url(/background_giai.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-center">Đăng ký tài khoản</CardTitle>
@@ -70,6 +79,15 @@ export default function RegisterPage() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium">Discord ID</label>
+              <Input
+                placeholder="Ví dụ: yourname hoặc yourname#1234"
+                value={discordId}
+                onChange={(e) => setDiscordId(e.target.value)}
+              />
             </div>
 
             <Button type="submit" className="w-full">Tạo tài khoản</Button>

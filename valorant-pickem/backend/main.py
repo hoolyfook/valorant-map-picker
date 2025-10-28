@@ -1,5 +1,4 @@
-from requests import Response, Request
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 from dotenv import load_dotenv
@@ -29,12 +28,26 @@ class AuthRequest(BaseModel):
     username: str
     password: str
 
-@app.post("/register")
-def register(body: AuthRequest):
-    if users.find_one({"username": body.username}):
-        raise HTTPException(400, "User already exists")
+class RegisterRequest(BaseModel):
+    username: str
+    password: str
+    discordId: str | None = None
 
-    users.insert_one({"username": body.username, "password": body.password})
+@app.post("/register")
+def register(body: RegisterRequest):
+    # Check for duplicate username
+    if users.find_one({"username": body.username}):
+        raise HTTPException(400, "Tên đăng nhập đã tồn tại")
+
+    # Check for duplicate discordId if provided
+    if body.discordId and users.find_one({"discordId": body.discordId}):
+        raise HTTPException(400, "Discord ID đã được sử dụng")
+
+    users.insert_one({
+        "username": body.username,
+        "password": body.password,
+        "discordId": body.discordId
+    })
     return {"message": "Registered successfully!"}
 
 @app.post("/login")
@@ -53,9 +66,12 @@ def save_picks(results: dict, request: Request):
     if not username:
         raise HTTPException(401, "Not authenticated")
 
+    user = users.find_one({"username": username})
+    discord_id = user.get("discordId") if user else None
+
     picks.update_one(
         {"username": username},
-        {"$set": {**results, "updated_at": datetime.utcnow()}},
+        {"$set": {**results, "username": username, "discordId": discord_id, "updated_at": datetime.utcnow()}},
         upsert=True
     )
     return {"message": "Picks saved!"}
