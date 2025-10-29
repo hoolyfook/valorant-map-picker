@@ -9,4 +9,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    host: true, // Cho phép truy cập từ bên ngoài container
+    port: 5173, // Giữ nguyên port
+    strictPort: true,
+    watch: {
+      usePolling: true, // Bắt buộc khi chạy trong Docker để HMR hoạt động
+    },
+  },
 });
