@@ -1,4 +1,5 @@
 import { useState } from "react"
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function LoginPage() {
   const [username, setUsername] = useState("")
@@ -6,7 +7,7 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch("http://localhost:8000/login", {
+      const res = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

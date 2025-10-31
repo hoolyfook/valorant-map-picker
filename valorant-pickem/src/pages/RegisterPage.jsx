@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card"
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("")
@@ -17,7 +18,7 @@ export default function RegisterPage() {
       return
     }
 
-    const res = await fetch("http://localhost:8000/register", {
+    const res = await fetch(`${API_BASE_URL}/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password, discordId }),
