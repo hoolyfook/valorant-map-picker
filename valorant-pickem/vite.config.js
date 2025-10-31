@@ -10,11 +10,17 @@ export default defineConfig({
     },
   },
   server: {
-    host: true, // Cho phép truy cập từ bên ngoài container
-    port: 5173, // Giữ nguyên port
+    host: true,          // Cho phép truy cập từ bên ngoài container
+    port: 5173,
     strictPort: true,
     watch: {
-      usePolling: true, // Bắt buộc khi chạy trong Docker để HMR hoạt động
+      usePolling: true,  // Bắt buộc khi chạy trong Docker để HMR hoạt động
     },
+
+    // 👇 Thêm phần này
+    allowedHosts: [
+      "austere-kent-transmarginal.ngrok-free.dev",
+      "ascendible-jaime-snapless.ngrok-free.dev"
+    ],
   },
 });

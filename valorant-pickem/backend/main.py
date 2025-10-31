@@ -15,12 +15,18 @@ db = client["valorant"]
 users = db["users"]
 picks = db["picks"]
 
+origins = [
+    "http://localhost:5173",
+    "https://austere-kent-transmarginal.ngrok-free.dev",
+    "https://ascendible-jaime-snapless.ngrok-free.dev"
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
 
 
@@ -57,7 +63,14 @@ def login(body: AuthRequest, response: Response):
         raise HTTPException(401, "Invalid credentials")
 
     # Set a cookie with the username (HTTP-only for security)
-    response.set_cookie(key="username", value=body.username, httponly=True)
+    response.set_cookie(
+        key="username",
+        value=body.username,
+        httponly=True,
+        samesite="none",   # Cho phép gửi cookie cross-domain
+        secure=True        # Bắt buộc khi samesite="none"
+    )
+
     return {"message": "Logged in!"}
 
 @app.post("/save_picks")
