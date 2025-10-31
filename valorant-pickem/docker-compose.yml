@@ -6,16 +6,16 @@ services:
     ports:
       - "5173:5173"
     environment:
-      - VITE_API_URL=http://localhost:8000
+      - VITE_API_BASE_URL=https://ascendible-jaime-snapless.ngrok-free.dev
     command: ["npm", "run", "dev"]
     restart: always
 
-  backend:
-    container_name: fastapi-backend
-    build:
-      context: ./backend
-    ports:
-      - "8000:8000"
-    env_file:
-      - .env
-    restart: always
+  # backend:
+  #   container_name: fastapi-backend
+  #   build:
+  #     context: ./backend
+  #   ports:
+  #     - "8000:8000"
+  #   env_file:
+  #     - .env
+  #   restart: always

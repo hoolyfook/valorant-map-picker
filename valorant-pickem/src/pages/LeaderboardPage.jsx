@@ -1,3 +1,5 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function LeaderboardPage() {
   const [board, setBoard] = useState([])
   const [error, setError] = useState(null)
@@ -5,7 +7,7 @@ export default function LeaderboardPage() {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const res = await fetch("http://localhost:8000/leaderboard")
+        const res = await fetch(`${API_BASE_URL}/leaderboard`)
         if (res.ok) {
           const data = await res.json()
           setBoard(data)

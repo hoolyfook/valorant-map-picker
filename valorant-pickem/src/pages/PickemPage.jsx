@@ -1,5 +1,5 @@
 // src/pages/PickemPage.jsx
-
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import { useState, useEffect } from "react"
 
 const initialTeams = ["KAZ", "SIP", "BOX", "PRX", "NAVI", "GEN", "LOUD", "TH"]
@@ -129,7 +129,7 @@ export default function PickemPage() {
 
   const savePicks = async () => {
     try {
-      const res = await fetch("http://localhost:8000/save_picks", {
+      const res = await fetch(`${API_BASE_URL}/save_picks`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
