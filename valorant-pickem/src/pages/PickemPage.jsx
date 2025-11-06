@@ -2,7 +2,7 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import { useState, useEffect } from "react"
 
-const initialTeams = ["KAZ", "SIP", "BOX", "PRX", "NAVI", "GEN", "LOUD", "TH"]
+const initialTeams = ["PS", "MOI", "J4F", "BSG", "J97", "TMG", "VLD", "CPG"]
 
 function LogoutButton() {
   const handleLogout = () => {
